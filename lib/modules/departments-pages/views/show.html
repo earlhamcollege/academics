@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}{{ data.piece.title }}{% endblock %}
+
+{% block main %}
+<section id="divisions" class="usa-grid usa-section">
+<a class="usa-button" href="{{data.piece._parentUrl}}">{{ data.page.title}} Page</a>
+
+<h2>{{ data.piece.title }}</h2>
+<h3> Majors</h3>
+
+{% for major in data.piece._majors %}
+{{major | json}}
+  <a href="{{ major.slug }}">{{ major.postDate | date('MM-DD-YYYY') }} {{ major.title }}</a> <br/>
+{% endfor %}
+</section>
+{% endblock %}

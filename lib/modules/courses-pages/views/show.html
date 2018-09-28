@@ -1,0 +1,37 @@
+{% extends data.outerLayout %}
+{% block title %}{{ data.piece.title }}{% endblock %}
+
+{% block main %}
+<section id="jobs" class="usa-grid usa-section">
+
+<a class="usa-button" href="{{data.piece._url}}">{{ data.page.title}} Page</a>
+
+{% set globalCoursePath = (apos.settings.getOption('coursesurl')) %}
+{% set aws = (apos.settings.getOption('AWSAccessKeyId')) %}
+{{ aws }}
+{% if data.next %}
+
+    <a class='usa-button' style="float: right;" href="{{ data.next.slug }}">Next: {{ data.next.title }} {{ data.next.category }}</a>
+{% endif %}
+<div data-apos-ajax-append>
+<h2>{{ data.piece.title }}</h2>
+{{ apos.singleton(data.piece, 'description', 'apostrophe-rich-text', {
+  toolbar: ['Styles', 'Blockquote', 'Bold', 'Italic', 'Link', 'BulletedList'],
+                        styles: [
+                            {name: 'Title', element: 'h2'},
+                          {name: 'Paragraph',element: 'p'}
+                        ]
+}) }}
+
+<h3>Required Books</h3>
+
+{% for book in data.piece._books %}
+
+<a href="{{book.awsurl}}" title="{{book.title}}" target="_blank">
+  <img src="http://images.amazon.com/images/P/{{book.isbn}}.01.ZTZZZZZZ.jpg" /></a>
+
+{% endfor %}
+
+</div>
+</section>
+{% endblock %}

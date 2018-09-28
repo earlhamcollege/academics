@@ -1,0 +1,48 @@
+{% extends data.outerLayout %}
+{% block title %}{{ data.page.title }}{% endblock %}
+
+{% block main %}
+{{ super() }}
+<section id="jobs" class="usa-grid usa-section">
+<h1 class="page-title">{{data.page.title}}</h1>
+{% set items = data.pieces | sort(false, true, '_department')%}
+
+<div data-apos-ajax-append>
+
+<ul class="usa-accordion-bordered">
+  {% for department, items in items | groupby("department") %}
+  <li>
+
+      {% for item in items.sort('postDate', 'desc') %}
+
+      {% if loop.index == 1 %}
+      <button class="usa-accordion-button"
+        aria-expanded="{{loop.first}}"
+        aria-controls="b-{{item._id}}">
+        {{ item._department.title | upper }}
+      </button>
+
+
+      <div id="b-{{item._id}}" class="usa-accordion-content">
+      {% endif %}
+      <a href="{{ item._url }}">{{ item.postDate | date('MM-DD-YYYY') }} {{ item.title }}</a> <br/>
+
+      {% if loop.last %}
+          </div>
+      {% endif %}
+      {% endfor %}
+
+      </li>
+
+  {% endfor %}
+</ul>
+</div>
+
+{# Load More button. Also outside data-apos-ajax-append, so it gets refreshed #}
+{% if data.currentPage < data.totalPages %}
+  {# "Load More" button with the "append=1" flag #}
+  <a href="{{ data.url | build({ page: data.currentPage + 1, append: 1 }) }}">Load More...</a>
+{% endif %}
+</section>
+
+{% endblock %}

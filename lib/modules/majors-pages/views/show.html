@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}{{ data.piece.title }}{% endblock %}
+
+{% block main %}
+<section id="jobs" class="usa-grid usa-section">
+<a class="usa-button" href="{{data.piece._parentUrl}}">{{ data.page.title}} Page</a>
+
+{% set globalCoursePath = apos.settings.getOption('coursesurl') %}
+
+{% if data.next %}
+
+    <a class='usa-button' style="float: right;" href="{{ data.next.slug }}">Next: {{ data.next.title }} {{ data.next.category }}</a>
+{% endif %}
+<h2>{{ data.piece.title }}</h2>
+{{ apos.singleton(data.piece.description, 'description', 'apostrophe-rich-text', {
+      toolbar: [ 'Bold', 'Italic' ]
+    }) }}
+
+
+
+<h3>Courses</h3>
+<ul>
+{% for course in data.piece._courses %}
+
+  <li><a href="{{globalCoursePath}}{{course.slug}}?ref='{{data.piece.slug}}'">{{course.title}}</a>
+  </li>
+{% endfor %}
+</ul>
+</section>
+{% endblock %}
