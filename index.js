@@ -4,7 +4,7 @@ module.exports = {
    name: 'ec-academics',
    extend: 'apostrophe-module',   
 	moogBundle: {
-		modules: ['books','courses','courses-pages', 'departments','departments-pages','divisions','majors','majors-pages','majors-widgets'],
+		modules: ['academic-page-templates','books','courses','courses-pages', 'departments','departments-pages','divisions','majors','majors-pages','majors-widgets'],
 		directory: 'lib/modules'
 	}
 };
